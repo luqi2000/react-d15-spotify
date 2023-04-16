@@ -51,12 +51,7 @@ function Sidebar() {
                           aria-describedby="basic-addon2"
                         />
                         <div className="input-group-append" style={{ marginBottom: "4%" }}>
-                          <Button
-                            variant="outline-secondary"
-                            className="btn-sm"
-                            type="button"
-                            id="button-addon1"
-                            onclick="search()">
+                          <Button variant="outline-secondary" className="btn-sm" type="button" id="button-addon1">
                             GO
                           </Button>
                         </div>

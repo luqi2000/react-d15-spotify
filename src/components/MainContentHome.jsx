@@ -1,8 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../style.css";
-import { Col, Row } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 
-function MainContentHome() {
+const MainContentHome = () => {
+  let rockArtists = ["queen", "u2", "thepolice", "eagles", "thedoors", "oasis", "thewho", "bonjovi"];
+
+  let popArtists = ["maroon5", "coldplay", "onerepublic", "jamesblunt", "katyperry", "arianagrande"];
+
+  let hipHopArtists = ["eminem", "snoopdogg", "lilwayne", "drake", "kanyewest"];
+
+  const [songs, setSongs] = useState([]);
+
+  function RandomArtist() {
+    let randomIndex = Math.floor(Math.random() * rockArtists.length);
+    return randomIndex;
+  }
+
+  let random1 = RandomArtist();
+
+  const RockClassics = `https://striveschool-api.herokuapp.com/api/deezer/search?q=${random1}`;
+
+  const FetchData = async () => {
+    try {
+      const response = await fetch(RockClassics);
+      if (response.ok) {
+        const { data } = await response.json();
+        console.log(data);
+
+        setSongs(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    FetchData();
+  }, []);
+
   return (
     <Col xs={12} md={9} className="offset-md-3 mainPage">
       <Row>
@@ -14,19 +49,24 @@ function MainContentHome() {
           <a href="#discover">DISCOVER</a>
         </Col>
       </Row>
-      <Row>
-        <Col xs={10}>
-          <div id="searchResults" style={{ display: "none" }}>
-            <h2>Search Results</h2>
-            <Row className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 imgLinks py-3" />
-          </div>
-        </Col>
-      </Row>
+
       <Row>
         <Col xs={10}>
           <div id="rock">
-            <h2>Rock Classics</h2>
-            <Row className="row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 imgLinks py-3" id="rockSection" />
+            <h2 className="">Rock Classics</h2>
+            <Row className="justify-content-center">
+              {songs.splice(0, 4).map(track => (
+                <Col key={track.id} md={3}>
+                  <Card className="bg-black text-white">
+                    <Card.Img src={track.album.cover_medium} className="w-100 object-fit-cover" alt="album cover" />
+                    <Card.Body>
+                      <Card.Title className="text-truncate">{track.title}</Card.Title>
+                      <Card.Link href="/artist">{track.artist.name}</Card.Link>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
           </div>
         </Col>
       </Row>
@@ -34,7 +74,19 @@ function MainContentHome() {
         <Col xs={10}>
           <div id="pop">
             <h2>Pop Culture</h2>
-            <Row className="row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 imgLinks py-3" id="popSection" />
+            <Row className="justify-content-center">
+              {songs.splice(0, 4).map(track => (
+                <Col key={track.id} md={3}>
+                  <Card className="bg-black text-white">
+                    <Card.Img src={track.album.cover_medium} className="w-100 object-fit-cover" alt="album cover" />
+                    <Card.Body>
+                      <Card.Title className="text-truncate">{track.title}</Card.Title>
+                      <Card.Link href="/artist">{track.artist.name}</Card.Link>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
           </div>
         </Col>
       </Row>
@@ -42,12 +94,24 @@ function MainContentHome() {
         <Col xs={10}>
           <div id="hiphop">
             <h2>#HipHop</h2>
-            <Row className="row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 imgLinks py-3" id="hipHopSection" />
+            <Row className="justify-content-center">
+              {songs.splice(0, 4).map(track => (
+                <Col key={track.id} md={3}>
+                  <Card className="bg-black text-white">
+                    <Card.Img src={track.album.cover_medium} className="w-100 object-fit-cover" alt="album cover" />
+                    <Card.Body>
+                      <Card.Title className="text-truncate">{track.title}</Card.Title>
+                      <Card.Link href="/artist">{track.artist.name}</Card.Link>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
           </div>
         </Col>
       </Row>
     </Col>
   );
-}
+};
 
 export default MainContentHome;

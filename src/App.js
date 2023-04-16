@@ -15,8 +15,8 @@ function App() {
         <Sidebar />
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/artist:artistId" element={<ArtistPage />} />
-          <Route path="/album:albumId" element={<AlbumPage />} />
+          <Route path="/artist" element={<ArtistPage />} />
+          <Route path="/album" element={<AlbumPage />} />
         </Routes>
       </BrowserRouter>
     </div>
